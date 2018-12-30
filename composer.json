@@ -1,0 +1,23 @@
+{
+  "name": "razesoldier/arc-raw-to-wiki",
+  "description": "Parse Arcaea raw data and import it into a wiki",
+  "keywords": ["Arcaea"],
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">7.2.0",
+    "php-curl-class/php-curl-class": "^8.4",
+    "mikehaertl/php-tmpfile": "^1.1",
+    "addwiki/mediawiki-api": "^0.7",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "ext-zip": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7"
+  },
+  "autoload": {
+    "psr-4": {
+      "RazeSoldier\\ArcRawToWiki\\": "src/"
+    }
+  }
+}
