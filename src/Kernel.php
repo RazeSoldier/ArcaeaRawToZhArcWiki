@@ -45,7 +45,7 @@ final class Kernel
      */
     private function downloadRawData()
     {
-        // 下载Zip@{
+        // 下载Zip @{
         $curl = new Curl();
         $curl->setOpts([
             CURLOPT_SSL_VERIFYPEER => 0,
