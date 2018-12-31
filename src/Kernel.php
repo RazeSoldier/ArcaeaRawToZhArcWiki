@@ -33,8 +33,7 @@ final class Kernel
     {
         $this->downloadRawData();
         $map = $this->parseRawData($this->config->get('RawName'));
-        if ($this->pushToWiki($map))
-        {
+        if ($this->pushToWiki($map)) {
             echo "Success\n";
         }
     }
