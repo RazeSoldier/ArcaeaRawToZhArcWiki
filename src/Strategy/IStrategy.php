@@ -10,11 +10,11 @@ use RazeSoldier\ArcRawToWiki\Config;
 
 interface IStrategy
 {
-	public function __construct(Config $config);
+    public function __construct(Config $config);
 
-	/**
-	 * 执行策略
-	 * @return mixed
-	 */
-	public function execute();
+    /**
+     * 执行策略
+     * @return mixed
+     */
+    public function execute();
 }

@@ -10,13 +10,8 @@ namespace RazeSoldier\ArcRawToWiki\WikitextModel;
  * 维基文本里表格的映射
  * @package RazeSoldier\ArcRawToWiki\WikitextModel
  */
-class Table
+class Table implements IElement
 {
-    /**
-     * @var array 数组化后的原始wikitext代码
-     */
-    private $source;
-
     /**
      * @var string 表格的wikitext
      */
@@ -36,11 +31,6 @@ class Table
      * @var array 每行的数据
      */
     private $lines = [];
-
-    public function __construct(array $source)
-    {
-        $this->source = $source;
-    }
 
     /**
      * @return string[]

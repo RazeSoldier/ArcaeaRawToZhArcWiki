@@ -4,6 +4,7 @@
         colors="true">
     <testsuites>
         <testsuite name="WikitextModelParser">
+            <file>src/WikitextModel/SectionTest.php</file>
             <file>src/WikitextModel/TableParserTest.php</file>
             <file>src/WikitextModel/TableTest.php</file>
         </testsuite>

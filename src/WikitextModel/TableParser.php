@@ -29,7 +29,7 @@ class TableParser
     {
         preg_match("/(?<table>{\|.*\n(.|\n)*\|})/", $this->text, $matches);
         $table = explode("\n", $matches['table']);
-        $tableObj = new Table($table);
+        $tableObj = new Table();
         $columnHead = [];
         $i = 0;
         foreach ($table as $line => $text) {

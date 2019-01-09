@@ -6,7 +6,7 @@
 
 namespace RazeSoldier\ArcRawToWiki;
 
-use RazeSoldier\ArcRawToWiki\Strategy\StrategyFactory;
+use RazeSoldier\ArcRawToWiki\Strategy\WayStrategy\StrategyFactory;
 
 final class Kernel
 {
@@ -24,7 +24,7 @@ final class Kernel
 
     public function run()
     {
-    	$strategy = StrategyFactory::make('WayStrategy.' . $this->config->get('Strategy'), $this->config);
-    	$strategy->execute();
+        $strategy = StrategyFactory::make($this->config->get('Strategy'), $this->config);
+        $strategy->execute();
     }
 }
