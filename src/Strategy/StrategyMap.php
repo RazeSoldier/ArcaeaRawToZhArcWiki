@@ -5,5 +5,5 @@
  */
 
 return [
-	'WayStrategy.UpdateWorldMapData' => 'UpdateWorldMapData',
+	'WayStrategy.UpdateWorldMapData' => 'WayStrategy\\UpdateWorldMapData',
 ];
