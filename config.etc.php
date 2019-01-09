@@ -4,6 +4,9 @@
  * @file
  */
 
+// 脚本执行的逻辑名字
+$cfgStrategy  = 'UpdateWorldMapData';
+
 // 想要解析的RAW的名字，可解析的列于此：https://github.com/esterTion/Arcaea_World_Mode_Raw_Data/tree/master/data
 // 请移除文件扩展名
 $cfgRawName = '0-le_winter';

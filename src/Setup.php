@@ -4,6 +4,8 @@
  * License: GPL-2.0 or later
  */
 
+define('APP_ROOT_PATH', dirname(__DIR__));
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // 检查data目录是否存在，如果不存在则尝试创建 @{
