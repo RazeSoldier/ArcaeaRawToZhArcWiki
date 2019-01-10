@@ -31,28 +31,27 @@ class SectionTest extends TestCase
         $table = $parser->getResult();
         $section->addElement($table);
         $expected = <<<TEXT
-    == Test ==
-    This is a test.
-    {| class="wikitable mw-collapsible mw-collapsed" border="1" cellspacing="0" cellpadding="5" style="text-align:center"
-    ! 级数
-    ! 步数
-    ! 限制
-    ! 奖励
-    |-
-    | 待
-    | 填
-    | 坑
-    | 
-    |-
-    | A
-    | B
-    | C
-    | D
-    ABC
-    |}
+== Test ==
+This is a test.
+{| class="wikitable mw-collapsible mw-collapsed" border="1" cellspacing="0" cellpadding="5" style="text-align:center"
+! 级数
+! 步数
+! 限制
+! 奖励
+|-
+| 待
+| 填
+| 坑
+| 
+|-
+| A
+| B
+| C
+| D
+ABC
+|}
 
 TEXT;
-
         $this->assertSame($expected, $section->getWikitext());
     }
 }
