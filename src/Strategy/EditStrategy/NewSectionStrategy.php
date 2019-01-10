@@ -51,7 +51,13 @@ class NewSectionStrategy implements IStrategy, IEditStrategy
         $table = new Table;
         $table->setTableStyle('class="wikitable mw-collapsible mw-collapsed" border="1" cellspacing="0" cellpadding="5" style="text-align:center"');
         $table->setColumnHead(['级数', '步数', '限制', '奖励']);
+        /** @var int $totalHeight 地图的总高度 */
+        $totalHeight = 0;
+        /** @var int $totalFrag 地图可奖励的Frag数量 */
+        $totalFrag = 0;
         foreach ($this->map->getSteps() as $step) {
+            $height = $step->getHeight();
+            $totalHeight = $totalHeight + $height;
             // 生成奖励文本 @{
             if ($step->getReward() !== null) {
                 $value = current($step->getReward());
@@ -60,6 +66,7 @@ class NewSectionStrategy implements IStrategy, IEditStrategy
                         $reward = "+$value stamina";
                         break;
                     case 'fragment':
+                        $totalFrag = $totalFrag + $value;
                         $reward = "$value Fragments";
                         break;
                     case 'character':
@@ -77,9 +84,11 @@ class NewSectionStrategy implements IStrategy, IEditStrategy
             // 生成限制 @{
             $restrict = $step->isRestrict() ? $step->getRestrict() : '';
             // @}
-            $data = [$step->getPos(), $step->getHeight(), $restrict, $reward];
+            $data = [$step->getPos(), $height, $restrict, $reward];
             $table->addLine($data);
         }
+        // 在表格末尾附加总计数据
+        $table->addLine(['总计', $totalHeight, '', $totalFrag]);
         // @}
         // 构建新的段落 @{
         $section = new Section('限时：Groovecoaster', 1);
