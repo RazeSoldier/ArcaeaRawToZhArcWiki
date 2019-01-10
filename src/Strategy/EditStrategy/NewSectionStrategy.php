@@ -66,19 +66,23 @@ class NewSectionStrategy implements IStrategy, IEditStrategy
                         if ($value == 20) {
                             $reward = '[[搭档#20..E7.88.B1.E6.89.98_.26_.E9.9C.B2.E5.A8.9C_-.E5.86.AC-.EF.BC.88Eto_.26_Luna_-Winter-.EF.BC.89|爱托 & 露娜 -冬-]]';
                         } else {
-                            $reward = $value;
+                            $reward = "character: $value";
                         }
                         break;
                 }
             } else {
                 $reward = '';
             }
-            $data = [$step->getPos(), $step->getHeight(), $step->isRestrict(), $reward];
+            // @}
+            // 生成限制 @{
+            $restrict = $step->isRestrict() ? $step->getRestrict() : '';
+            // @}
+            $data = [$step->getPos(), $step->getHeight(), $restrict, $reward];
             $table->addLine($data);
         }
         // @}
         // 构建新的段落 @{
-        $section = new Section('Groovecoaster', 1);
+        $section = new Section('限时：Groovecoaster', 1);
         $section->addElement('解锁条件：购入[[Groove Coaster Collaboration]]');
         $section->addElement('');
         $section->addElement($table);

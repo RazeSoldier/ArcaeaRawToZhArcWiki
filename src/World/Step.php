@@ -28,6 +28,11 @@ class Step
     private $isRestrict;
 
     /**
+     * @var string 限制曲
+     */
+    private $restrict;
+
+    /**
      * @var array|null 奖励，如果没有奖励则为NULL
      */
     private $reward;
@@ -70,6 +75,19 @@ class Step
     public function isRestrict() : bool
     {
         return $this->isRestrict;
+    }
+
+    public function setRestrict(string $restrict)
+    {
+        $this->restrict = $restrict;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRestrict() : string
+    {
+        return $this->restrict;
     }
 
     /**

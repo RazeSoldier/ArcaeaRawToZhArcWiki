@@ -35,7 +35,16 @@ class StepParser
         $step = new Step;
         $step->setPos($this->data['position']);
         $step->setHeight($this->data['capture']);
-        $step->setIsRestrict(isset($this->data['restrict_type']));
+        // 设置限制条件 @{
+        if (isset($this->data['restrict_type'])) {
+            $step->setIsRestrict(true);
+            if (isset($this->data['restrict_id'])) {
+                $step->setRestrict($this->data['restrict_id']);
+            }
+        } else {
+            $step->setIsRestrict(false);
+        }
+        // @}
         // 是否有加耐力的奖励
         if (isset($this->data['plus_stamina_value'])) {
             $step->setReward(['plus_stamina' => $this->data['plus_stamina_value']]);
