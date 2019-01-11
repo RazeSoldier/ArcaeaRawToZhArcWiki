@@ -138,7 +138,7 @@ class AddSongByPackName implements IStrategy
         $result = $editor->create($page->getWikitext(), '新增的歌曲资料（由bot进行的编辑）');
         // @}
         if ($result) {
-            echo "Success created [[{$page->getTitle()}]]\n";
+            echo "Successfully created [[{$page->getTitle()}]]\n";
         } else {
             echo "Failed to create [[{$page->getTitle()}]]\n";
         }
