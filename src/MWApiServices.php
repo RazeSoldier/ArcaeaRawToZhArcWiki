@@ -15,6 +15,8 @@ use Mediawiki\Api\{
 /**
  * 包装Mediawiki\Api\MediawikiFactory
  * @package RazeSoldier\ArcRawToWiki
+ * @method newPageGetter()
+ * @method newRevisionSaver()
  */
 class MWApiServices
 {
