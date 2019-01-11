@@ -9,6 +9,7 @@
             <file>src/WikitextModel/SectionTest.php</file>
             <file>src/WikitextModel/TableParserTest.php</file>
             <file>src/WikitextModel/TableTest.php</file>
+            <file>src/WikitextModel/TemplateTest.php</file>
         </testsuite>
     </testsuites>
     <filter>

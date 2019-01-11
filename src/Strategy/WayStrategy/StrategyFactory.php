@@ -17,6 +17,7 @@ use RazeSoldier\ArcRawToWiki\{
 class StrategyFactory
 {
     private static $classMap = [
+        'AddSongByPackName' => 'AddSongByPackName',
         'UpdateWorldMapData' => 'UpdateWorldMapData',
     ];
 
