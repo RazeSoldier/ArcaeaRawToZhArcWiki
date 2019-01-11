@@ -28,6 +28,11 @@ class Page implements IElement
     private $structure;
 
     /**
+     * @var array 页面所有段落的索引
+     */
+    private $sectionIndex = [];
+
+    /**
      * Page constructor.
      * @param string|null $title 页面的标题
      */
@@ -66,19 +71,55 @@ class Page implements IElement
     }
 
     /**
-     * 根据当前的结构重新生成段落wikitext
+     * 根据当前的结构重新生成段落wikitext，并且重新生成段落索引
      */
     private function sync()
     {
         $text = '';
-        foreach ($this->structure as $element) {
+        $this->sectionIndex = [];
+        foreach ($this->structure as $i => $element) {
             if ($element instanceof IElement) {
+                if ($element instanceof Section) {
+                    $this->sectionIndex[] = [
+                        'title' => $element->getTitle()->getText(),
+                        'position' => $i,
+                    ];
+                }
                 $text .= $element->getWikitext();
                 continue;
             }
             $text .= "$element\n";
         }
         $this->wikitext = $text;
+    }
+
+    /**
+     * 用一个段落替换一个现有的段落
+     * @param Section $section 要替换的段落
+     * @param int $pos 现有段落在页面的位置
+     */
+    public function replaceSection(Section $section, int $pos)
+    {
+        $this->structure[$pos] = $section;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSectionIndex() : array
+    {
+        if ($this->sectionIndex === []) {
+            $this->sync();
+        }
+        return $this->sectionIndex;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStructure() : array
+    {
+        return $this->structure;
     }
 
     public function getWikitext() : string

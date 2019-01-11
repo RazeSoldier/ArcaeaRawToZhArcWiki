@@ -69,4 +69,12 @@ class Section implements IElement
         }
         return $this->wikitext;
     }
+
+    /**
+     * @return Title
+     */
+    public function getTitle() : Title
+    {
+        return $this->title;
+    }
 }

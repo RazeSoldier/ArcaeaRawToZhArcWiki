@@ -43,4 +43,12 @@ class Title implements IElement
         }
         return $this->wikitext;
     }
+
+    /**
+     * @return string
+     */
+    public function getText() : string
+    {
+        return $this->text;
+    }
 }
