@@ -28,6 +28,14 @@ class Map
     private $steps;
 
     /**
+     * @var array 解锁这张地图的条件
+     */
+    private $require = [
+        'type' => null,
+        'id' => null,
+    ];
+
+    /**
      * Map constructor.
      * @param string $name 地图的名字
      */
@@ -63,5 +71,25 @@ class Map
     public function getSteps() : array
     {
         return $this->steps;
+    }
+
+    public function setRequireType(string $requireType) : void
+    {
+        $this->require['type'] = $requireType;
+    }
+
+    public function getRequireType() : string
+    {
+        return $this->require['type'];
+    }
+
+    public function setRequireId(string $requireId) : void
+    {
+        $this->require['id'] = $requireId;
+    }
+
+    public function getRequireId() : string
+    {
+        return $this->require['id'];
     }
 }

@@ -38,6 +38,7 @@ class StepParser
         // 设置限制条件 @{
         if (isset($this->data['restrict_type'])) {
             $step->setIsRestrict(true);
+            $step->setRestrictType($this->data['restrict_type']);
             if (isset($this->data['restrict_id'])) {
                 $step->setRestrict($this->data['restrict_id']);
             }

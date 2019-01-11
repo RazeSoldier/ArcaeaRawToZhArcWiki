@@ -124,9 +124,7 @@ class Page implements IElement
 
     public function getWikitext() : string
     {
-        if ($this->wikitext === null) {
-            $this->sync();
-        }
+        $this->sync();
         return $this->wikitext;
     }
 }

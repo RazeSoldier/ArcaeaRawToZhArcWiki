@@ -96,7 +96,7 @@ class UpdateWorldMapData implements IStrategy
      */
     private function pushToWiki(Map $map) : bool
     {
-        $strategy = StrategyFactory::make('NewSectionStrategy', $this->config);
+        $strategy = StrategyFactory::make('ExistingSectionStrategy', $this->config);
         $strategy->addMap($map);
         return $strategy->execute();
     }

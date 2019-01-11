@@ -35,6 +35,8 @@ class Parser
         $json = json_decode($this->raw, true)['value'];
         $map = new Map($json['current_map']);
         $map->setStepCount($json['maps'][0]['step_count']);
+        $map->setRequireType($json['maps'][0]['require_type']);
+        $map->setRequireId($json['maps'][0]['require_id']);
         foreach ($json['maps'][0]['steps'] as $step) {
             $step = new StepParser($step);
             $map->addStep($step->getResult());

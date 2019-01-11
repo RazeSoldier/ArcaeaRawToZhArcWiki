@@ -9,10 +9,17 @@ namespace RazeSoldier\ArcRawToWiki\Strategy\EditStrategy;
 use RazeSoldier\ArcRawToWiki\{
     Config,
     MWApiServices,
+    Pack\PackMapBuilder,
+    Pack\PackSearcher,
     Pusher\Editor,
+    Song\SongMapBuilder,
+    Song\SongSearcher,
     Strategy\IStrategy,
-    WikitextModel\TableParser,
-    World\Map,
+    WikitextModel\PageParser,
+    WikitextModel\Section,
+    WikitextModel\SectionSearcher,
+    WikitextModel\Table,
+    World\Map
 };
 
 class ExistingSectionStrategy implements IStrategy, IEditStrategy
@@ -30,6 +37,9 @@ class ExistingSectionStrategy implements IStrategy, IEditStrategy
     public function __construct(Config $config)
     {
         $this->config = $config;
+        if (!$this->config->has('WantUpdateSectionName')) {
+            throw new \RuntimeException('$cfgWantUpdateSectionName not set');
+        }
     }
 
     public function addMap(Map $map)
@@ -48,11 +58,30 @@ class ExistingSectionStrategy implements IStrategy, IEditStrategy
         $page = MWApiServices::getInstance()->newPageGetter()->getFromTitle( 'World模式梯子详表' );
         $source = $page->getRevisions()->getLatest()->getContent()->getData();
         // @}
-        // 生成文本 @{
-        preg_match('/(?<text>=限时：Empire of Winter=\n(.|\n)*)(=.*=)?/', $source, $matches);
-        $text = $matches['text'];
-        $table = (new TableParser($text))->getResult();
+        // 找到需要更新的段落位置 @{
+        $pageObj = (new PageParser($source))->getResult();
+        $searcher = new SectionSearcher($pageObj);
+        $sectionPos = $searcher->searchPosByName($this->config->get('WantUpdateSectionName'));
+        if (count($sectionPos) > 1) {
+            throw new \RuntimeException('Multiple identical section names');
+        }
+        $sectionPos = $sectionPos[0];
+        // @}
+        // 生成段落 @{
+        $songMap = (new SongMapBuilder)->getSongMap();
+        $songSearcher = new SongSearcher($songMap);
+        $packMap = (new PackMapBuilder())->getPackMap();
+        $packSearcher = new PackSearcher($packMap);
+        $table = new Table;
+        $table->setTableStyle('class="wikitable mw-collapsible mw-collapsed" border="1" cellspacing="0" cellpadding="5" style="text-align:center"');
+        $table->setColumnHead(['级数', '步数', '限制', '奖励']);
+        /** @var int $totalHeight 地图的总高度 */
+        $totalHeight = 0;
+        /** @var int $totalFrag 地图可奖励的Frag数量 */
+        $totalFrag = 0;
         foreach ($this->map->getSteps() as $step) {
+            $height = $step->getHeight();
+            $totalHeight = $totalHeight + $height;
             // 生成奖励文本 @{
             if ($step->getReward() !== null) {
                 $value = current($step->getReward());
@@ -61,27 +90,54 @@ class ExistingSectionStrategy implements IStrategy, IEditStrategy
                         $reward = "+$value stamina";
                         break;
                     case 'fragment':
+                        $totalFrag = $totalFrag + $value;
                         $reward = "$value Fragments";
                         break;
                     case 'character':
-                        if ($value == 20) {
-                            $reward = '[[搭档#20..E7.88.B1.E6.89.98_.26_.E9.9C.B2.E5.A8.9C_-.E5.86.AC-.EF.BC.88Eto_.26_Luna_-Winter-.EF.BC.89|爱托 & 露娜 -冬-]]';
+                        if ($value == 22) {
+                            $reward = '[[搭档#22.光 & 晴音（Seine & Hikari）|光 & 晴音]]';
                         } else {
-                            $reward = $value;
+                            $reward = "character: $value";
                         }
+                        $characterReward = $reward;
                         break;
                 }
             } else {
                 $reward = '';
             }
             // @}
-            $data = [$step->getPos(), $step->getHeight(), $step->isRestrict(), $reward];
+            // 生成限制 @{
+            if ($step->isRestrict()) {
+                if ($step->getRestrictType() === 'song_id') {
+                    $restrict = "[[{$songSearcher->searchByRealName($step->getRestrict())->getName()}]]";
+                } elseif ($step->getRestrictType() === 'pack_id') {
+                    $restrict = "'''[[{$packSearcher->searchByRealName($step->getRestrict())->getName()} Collaboration]]'''";
+                } else {
+                    throw new \LogicException('Unknown issue');
+                }
+            } else {
+                $restrict = '';
+            }
+            // @}
+            $data = [$step->getPos(), $height, $restrict, $reward];
             $table->addLine($data);
         }
+        // 在表格末尾附加总计数据
+        $table->addLine(['总计', $totalHeight, '', "$totalFrag Fragments<br>$characterReward"]);
+        $section = new Section($this->config->get('WantUpdateSectionName'), 1);
+        // 生成解锁条件
+        if ($this->map->getRequireType() === 'pack') {
+            $section->addElement("解锁条件：购入[[{$packSearcher->searchByRealName($this->map->getRequireId())->getName()} Collaboration]]曲包");
+        }
+        $section->addElement('');
+        $section->addElement($table);
+        $section->addElement('');
+        // @}
+        // 替换现有的段落 @
+        $pageObj->replaceSection($section, $sectionPos);
+        $finalText = $pageObj->getWikitext();
         // @}
         // 开始编辑
-        $text = preg_replace("/(?<table>{\|.*\n(.|\n)*\|})/", $table->getWikitext(), $text);
-        $finalText = preg_replace('/(?<text>=限时：Empire of Winter=\n(.|\n)*)(=.*=)?/', $text, $source);
         $editor = new Editor('World模式梯子详表');
         return $editor->edit($page, $finalText, '填充梯子资料（由bot进行的编辑）');
     }

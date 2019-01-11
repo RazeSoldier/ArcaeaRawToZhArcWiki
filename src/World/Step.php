@@ -28,9 +28,14 @@ class Step
     private $isRestrict;
 
     /**
-     * @var string 限制曲
+     * @var string 限制条件
      */
     private $restrict;
+
+    /**
+     * @var string 限制的类型
+     */
+    private $restrictType;
 
     /**
      * @var array|null 奖励，如果没有奖励则为NULL
@@ -96,6 +101,22 @@ class Step
     public function setIsRestrict(bool $isRestrict) : void
     {
         $this->isRestrict = $isRestrict;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRestrictType() : string
+    {
+        return $this->restrictType;
+    }
+
+    /**
+     * @param string $restrictType
+     */
+    public function setRestrictType(string $restrictType) : void
+    {
+        $this->restrictType = $restrictType;
     }
 
     /**
