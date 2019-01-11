@@ -39,6 +39,14 @@ class SongMapBuilder
         $this->songMap = new SongMap;
         foreach ($json['songs'] as $song) {
             $songObj = new Song($song['title_localized']['en'], $song['id']);
+            //$songObj->setTime($song['']); // TODO
+            $songObj->setArtist($song['artist']);
+            $songObj->setBpm($song['bpm_base']);
+            $songObj->setUpdateTime($song['date']);
+            $songObj->setPastInfo($song['difficulties'][0]);
+            $songObj->setPresentInfo($song['difficulties'][1]);
+            $songObj->setFutureInfo($song['difficulties'][2]);
+            $songObj->setPackName($song['set']);
             $this->songMap->addSong($songObj);
         }
     }
