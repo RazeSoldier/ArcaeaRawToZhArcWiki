@@ -11,7 +11,9 @@ use Mediawiki\DataModel\{
     Content,
     EditInfo,
     Page,
-    Revision
+    PageIdentifier,
+    Revision,
+    Title,
 };
 
 /**
@@ -25,6 +27,10 @@ class Editor
      */
     private $title;
 
+    /**
+     * Editor constructor.
+     * @param string $title 要编辑的页面标题
+     */
     public function __construct(string $title)
     {
         $this->title = $title;
@@ -41,6 +47,24 @@ class Editor
     {
         $content = new Content($text);
         $revision = new Revision($content, $page->getPageIdentifier());
+        if ($summary !== null) {
+            $summary = new EditInfo($summary);
+        }
+        return MWApiServices::getInstance()->newRevisionSaver()->save($revision, $summary);
+    }
+
+    /**
+     * 创建一个页面
+     * @param string $text 要保存的文本
+     * @param string|null $summary 编辑摘要
+     * @return bool 如果创建成功，返回TRUE；否则，返回FALSE
+     */
+    public function create(string $text, string $summary = null) : bool
+    {
+        $content = new Content($text);
+        $title = new Title($this->title);
+        $identifier = new PageIdentifier($title);
+        $revision = new Revision($content, $identifier);
         if ($summary !== null) {
             $summary = new EditInfo($summary);
         }
