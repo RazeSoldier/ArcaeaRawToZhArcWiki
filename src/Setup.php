@@ -4,6 +4,7 @@
  * License: GPL-2.0 or later
  */
 
+define('START_TIME', microtime(true));
 define('APP_ROOT_PATH', dirname(__DIR__));
 
 require_once __DIR__ . '/../vendor/autoload.php';

@@ -27,4 +27,12 @@ final class Kernel
         $strategy = StrategyFactory::make($this->config->get('Strategy'), $this->config);
         $strategy->execute();
     }
+
+    public function __destruct()
+    {
+        echo "+--Script Running Report--+\n";
+        echo 'Duration: ' . round(microtime(true) - START_TIME, 2) . "s \n";
+        echo 'Memory usage: ' . round(memory_get_usage()/1024/1024, 2) . ' M (Peak: ' .
+            round(memory_get_peak_usage()/1024/1024, 2) . " M)\n";
+    }
 }
