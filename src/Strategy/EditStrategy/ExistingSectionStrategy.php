@@ -6,20 +6,21 @@
 
 namespace RazeSoldier\ArcRawToWiki\Strategy\EditStrategy;
 
-use RazeSoldier\ArcRawToWiki\{
-    Config,
+use RazeSoldier\ArcRawToWiki\{Config,
+    Kernel,
     MWApiServices,
-    Pack\PackMapBuilder,
-    Pack\PackSearcher,
     Pusher\Editor,
-    Song\SongMapBuilder,
-    Song\SongSearcher,
     Strategy\IStrategy,
     WikitextModel\PageParser,
     WikitextModel\Section,
     WikitextModel\SectionSearcher,
-    WikitextModel\Table,
-    World\Map
+    WikitextModel\Table};
+use RazeSoldier\ArcaeaDataModel\{
+    Pack\PackMapBuilder,
+    Pack\PackSearcher,
+    Song\SongMapBuilder,
+    Song\SongSearcher,
+    World\Map,
 };
 
 class ExistingSectionStrategy implements IStrategy, IEditStrategy
@@ -68,9 +69,9 @@ class ExistingSectionStrategy implements IStrategy, IEditStrategy
         $sectionPos = $sectionPos[0];
         // @}
         // 生成段落 @{
-        $songMap = (new SongMapBuilder)->getSongMap();
+        $songMap = (new SongMapBuilder(Kernel::DATA_PATH . '/songlist.json'))->getSongMap();
         $songSearcher = new SongSearcher($songMap);
-        $packMap = (new PackMapBuilder())->getPackMap();
+        $packMap = (new PackMapBuilder(Kernel::DATA_PATH . '/packlist.json'))->getPackMap();
         $packSearcher = new PackSearcher($packMap);
         $table = new Table;
         $table->setTableStyle('class="wikitable mw-collapsible mw-collapsed" border="1" cellspacing="0" cellpadding="5" style="text-align:center"');

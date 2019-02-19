@@ -7,21 +7,23 @@
 namespace RazeSoldier\ArcRawToWiki\Strategy\WayStrategy;
 
 use RazeSoldier\ArcRawToWiki\{
-    ChartDesigner\DesignerMap,
     Config,
     MWApiServices,
-    Pack\PackMap,
-    Pack\PackMapBuilder,
-    Pack\PackSearcher,
     Pusher\Editor,
-    Song\Song,
-    Song\SongMapBuilder,
-    Song\SongSearcher,
     Strategy\IStrategy,
     WikitextModel\Page,
     WikitextModel\Section,
     WikitextModel\Table,
     WikitextModel\Template
+};
+use RazeSoldier\ArcaeaDataModel\{
+    ChartDesigner\DesignerMap,
+    Pack\PackMap,
+    Pack\PackMapBuilder,
+    Pack\PackSearcher,
+    Song\Song,
+    Song\SongMapBuilder,
+    Song\SongSearcher,
 };
 
 /**

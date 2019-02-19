@@ -13,8 +13,8 @@ use RazeSoldier\ArcRawToWiki\{
     Strategy\IStrategy,
     WikitextModel\Section,
     WikitextModel\Table,
-    World\Map
 };
+use RazeSoldier\ArcaeaDataModel\World\Map;
 
 class NewSectionStrategy implements IStrategy, IEditStrategy
 {

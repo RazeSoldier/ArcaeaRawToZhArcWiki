@@ -11,8 +11,10 @@ use RazeSoldier\ArcRawToWiki\{
     Kernel,
     Strategy\IStrategy,
     Strategy\EditStrategy\StrategyFactory,
-    World\Map,
-    WorldRawParser\Parser
+};
+use RazeSoldier\ArcaeaDataModel\World\{
+    Map,
+    MapParser
 };
 use Curl\Curl;
 use mikehaertl\tmp\File as TmpFile;
@@ -84,7 +86,7 @@ class UpdateWorldMapData implements IStrategy
     private function parseRawData(string $name) : Map
     {
         $raw = file_get_contents(Kernel::DATA_PATH . "/$name.json");
-        $parser = new Parser($raw);
+        $parser = new MapParser($raw);
         return $parser->getResult();
     }
 

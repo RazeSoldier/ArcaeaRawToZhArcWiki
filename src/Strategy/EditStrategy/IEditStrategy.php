@@ -8,8 +8,8 @@ namespace RazeSoldier\ArcRawToWiki\Strategy\EditStrategy;
 
 use RazeSoldier\ArcRawToWiki\{
     Strategy\IStrategy,
-    World\Map,
 };
+use RazeSoldier\ArcaeaDataModel\World\Map;
 
 interface IEditStrategy extends IStrategy
 {

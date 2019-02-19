@@ -6,6 +6,7 @@
   "require": {
     "php": ">7.2.0",
     "php-curl-class/php-curl-class": "^8.4",
+    "razesoldier/arcaea-data-model": "^1.0",
     "mikehaertl/php-tmpfile": "^1.1",
     "addwiki/mediawiki-api": "^0.7",
     "ext-json": "*",
