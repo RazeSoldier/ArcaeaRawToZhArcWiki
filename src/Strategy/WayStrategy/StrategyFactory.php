@@ -18,6 +18,7 @@ class StrategyFactory
 {
     private static $classMap = [
         'AddSongByPackName' => 'AddSongByPackName',
+        'JaRedirectCreation' => 'JaRedirectCreation',
         'UpdateWorldMapData' => 'UpdateWorldMapData',
     ];
 
