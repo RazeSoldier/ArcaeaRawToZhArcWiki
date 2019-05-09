@@ -60,10 +60,10 @@ class PageParser
             if (preg_match('/^(?<symbol>=+)[\s|\W|\w]*/', $lineText, $matches)) {
                 $symbolCount = strlen($matches['symbol']);
                 // 尝试捕捉段落的标题结束的符号
-                if (preg_match('/[\s|\W|\w]*(?<symbol>=+)$/', $lineText, $matches)) {
+                if (preg_match('/[\s|\W|\w]*?(?<symbol>=+)$/', $lineText, $matches)) {
                     // 如果前面的=符号数量等于后面=符号的数量
                     if ($symbolCount === strlen($matches['symbol'])) {
-                        preg_match('/^=+\s*(?<text>[\W|\w]*)\s*=+$/', $lineText, $matches);
+                        preg_match('/^=+\s*(?<text>[\W|\w]*?)\s*=+$/', $lineText, $matches);
                         if ($inSection) {
                             /** @var Section $sectionObj */
                             $pageObj->addElement($sectionObj);
